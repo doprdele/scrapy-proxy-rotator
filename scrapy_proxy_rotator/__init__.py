@@ -42,7 +42,8 @@ class ProxyMiddleware(object):
         Args:
             request (scrapy.Request)
         """
-        self.set_proxy(request)
+        if ('dont_proxy' not in request.meta):
+            self.set_proxy(request)
 
 
     def process_response(self, request, response, spider):
@@ -52,8 +53,10 @@ class ProxyMiddleware(object):
             request (scrapy.Request)
             response (scrapy.Response)
         """
-        if self.should_remove_proxy(response):
-            self.blacklisted_proxies.append(request.meta['proxy'])
+
+        if ('dont_proxy' not in response.meta):
+            if self.should_remove_proxy(response):
+                self.blacklisted_proxies.append(request.meta['proxy'])
 
         return response
 
