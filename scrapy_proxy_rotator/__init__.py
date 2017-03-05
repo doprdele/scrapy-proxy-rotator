@@ -54,10 +54,6 @@ class ProxyMiddleware(object):
             response (scrapy.Response)
         """
 
-        if ('dont_proxy' not in response.meta):
-            if self.should_remove_proxy(response):
-                self.blacklisted_proxies.append(request.meta['proxy'])
-
         return response
 
 
