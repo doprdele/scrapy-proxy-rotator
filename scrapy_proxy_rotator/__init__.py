@@ -110,7 +110,7 @@ def proxy_auth_header(user, password):
     Returns:
         str: proxy authentication header.
     """
-    return 'Basic ' + base64.encodestring('%s:%s' % (user, password))
+    return 'Basic ' + base64.encodestring('%s:%s' % (user, password)).strip()
 
 
 def read_proxies(fname):
