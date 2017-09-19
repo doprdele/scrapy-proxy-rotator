@@ -15,6 +15,7 @@ class ProxyMiddleware(object):
 
         self.username = self.settings['username']
         self.password = self.settings['password']
+        self.LUMINATI_RANDOM = self.settings['LUMINATI_RANDOM'] if 'LUMINATI_RANDOM' in self.settings
 
         self.proxies = read_proxies(self.settings['proxies_file'])
 
@@ -63,9 +64,15 @@ class ProxyMiddleware(object):
         Args:
             request (scrapy.Request)
         """
+        u = None
+        if self.LUMINATI_RANDOM:
+          u = self.username + '-session-glob_rand{0}'.format(random.randrange(10 ** 11, 10 ** 12))
+        else:
+          u = self.username
+
         request.meta['proxy'] = self.random_proxy()
         request.headers['Proxy-Authorization'] = proxy_auth_header(
-            self.username, self.password)
+            u, self.password)
 
 
     def random_proxy(self):
