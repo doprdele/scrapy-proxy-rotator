@@ -15,7 +15,7 @@ class ProxyMiddleware(object):
 
         self.username = self.settings['username']
         self.password = self.settings['password']
-        self.LUMINATI_RANDOM = self.settings['LUMINATI_RANDOM'] if 'LUMINATI_RANDOM' in self.settings
+        self.LUMINATI_RANDOM = self.settings['LUMINATI_RANDOM'] if 'LUMINATI_RANDOM' in self.settings else False
 
         self.proxies = read_proxies(self.settings['proxies_file'])
 
